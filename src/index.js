@@ -19,53 +19,69 @@ let orangeJ = {
 };
 
 function newFav(title) {
-  let span = document.createElement("span");
-  span.textContent = " (" + title.kcal + ")";
-  span.style.fontStyle = "italic";
-  let li = document.createElement("li");
-  li.textContent = title.name;
-  li.appendChild(span);
-  li.classList.add("list-group-item");
-  list.push(title);
-  return li;
+	let span = document.createElement("span");
+	span.textContent = " (" + title.kcal + ")";
+	span.style.fontStyle = "italic";
+
+	let del = document.createElement("button");
+	del.textContent = "x";
+	del.addEventListener("click", delRow);
+
+	let li = document.createElement("li");
+	li.textContent = title.name;
+	li.classList.add("list-group-item");
+
+	li.appendChild(span);
+	li.appendChild(del);
+	list.push(title);
+
+	function delRow() {
+		li.remove();
+		let currentSum = parseInt(document.getElementById("sum").textContent);
+		currentSum -= title.kcal;
+		document.getElementById("sum").textContent = currentSum;
+	}
+
+	return li;
 }
 
 function addToList(code) {
-  let parent = document.getElementById("list");
-  switch (code) {
-    case 1:
-      console.log("Pic 1 clicked");
-      parent.appendChild(newFav(hamburger));
-      break;
-    case 2:
-      console.log("Pic 2 clicked");
-      parent.appendChild(newFav(apple));
-      break;
-    case 3:
-      console.log("Pic 3 clicked");
-      parent.appendChild(newFav(orangeJ));
-      break;
+	let parent = document.getElementById("list");
+	switch (code) {
+		case 1:
+			console.log("Pic 1 clicked");
+			parent.appendChild(newFav(hamburger));
+			break;
+		case 2:
+			console.log("Pic 2 clicked");
+			parent.appendChild(newFav(apple));
+			break;
+		case 3:
+			console.log("Pic 3 clicked");
+			parent.appendChild(newFav(orangeJ));
+			break;
 
-    default:
-      console.log("Take this L");
-      break;
-  }
-  sum();
+		default:
+			console.log("Take this L");
+			break;
+	}
+	sum();
 }
 
-function sum(){
-    let sum =0;
-    list.forEach(element => {
-        sum+=element.kcal
-    });
-    document.getElementById('sum').textContent = sum;
+function sum() {
+	let sum = 0;
+	list.forEach((element) => {
+		sum += element.kcal;
+	});
+	document.getElementById("sum").textContent = sum;
 }
 
-function empty(){
-    document.getElementById("list").textContent = '';
-    list.forEach(element => {
-        list.pop(element)
-    });
+function empty() {
+	document.getElementById("list").textContent = "";
+	document.getElementById("sum").textContent = "0";
+	list.forEach((element) => {
+		list.pop(element);
+	});
 }
 
 function init() {
